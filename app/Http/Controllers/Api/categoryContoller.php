@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use categories\Category;
+use App\Models\Category;
+//use categories\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,15 +14,18 @@ class categoryContoller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  public function __construct()
+    //  {
+    //     $this->middleware()->Auth::guard('sanctum')->except('index','show');
+
+    //  }
     public function index()
     {
         $categories = Category::all();
 
-    return response()->json([
-        'status' =>'true',
-        'msg'=>'all categories are',
-        'data'=>$categories
-    ],200);
+        return response()->json(
+            $categories,200);
 
     }
 
@@ -33,16 +37,13 @@ class categoryContoller extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request-> validate([
             'name'=>'required|string|unique:category',
             'photo'=>'required'
         ]);
-        $categories = Category::create($validated->all());
-        return response()->json([
-            'status' =>'true',
-            'msg'=>' category is',
-            'data'=>$categories
-        ],200);
+        $categories = Category::create($request->all());
+        return response()->json(
+            $categories->refresh(),200);
 
     }
 
@@ -54,7 +55,8 @@ class categoryContoller extends Controller
      */
     public function show($id)
     {
-        //
+        $categories = Category::findOrFail($id);
+        return response()->json($categories,200);
     }
 
     /**
@@ -66,7 +68,16 @@ class categoryContoller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request ->validate([
+            'name'=>'sometimes|required|string|unique:category',
+            'photo'=>'sometimes|required'
+
+        ]);
+        $categories = Category::findOrFail($id);
+        $categories->update($request->all());
+
+
+        return response()->json($categories->refresh(),201);
     }
 
     /**
@@ -77,6 +88,10 @@ class categoryContoller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categories = Category::findOrFail($id);
+        $categories->delete();
+        return response()->json($categories);
+
+
     }
 }

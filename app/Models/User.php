@@ -1,6 +1,6 @@
 <?php
 
-namespace User;
+namespace App\Models;
 
 use Cart\Cart;
 use Illuminate\Database\Eloquent\Model;

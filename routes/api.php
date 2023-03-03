@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\categoryContoller;
+use App\Http\Controllers\Api\loginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/category',[categoryContoller::class,'index']);
-Route::post('/category/store',[categoryContoller::class,'store']);
+Route::apiResource('/category','categoryContoller');
+//Route::post('/category/store',[categoryContoller::class,'store']);
+Route::post('login',[loginController::class,'login']);
+Route::post('login',[loginController::class,'login']);
+Route::apiResource('/altaqte3','Altaqte3Controller');
