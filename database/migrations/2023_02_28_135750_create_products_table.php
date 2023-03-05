@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateProductsTable extends Migration {
 
@@ -11,7 +12,7 @@ class CreateProductsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->string('name');
-			$table->integer('category_id')->unsigned();
+			$table->foreignId('category_id')->unsigned()->constrained('categories')->cascadeOnDelete();
 			$table->string('photo');
 			$table->float('price');
 		});

@@ -11,7 +11,9 @@ class Orders extends Model
 
     protected $table = 'orders';
     public $timestamps = true;
-    protected $fillable = array('quantity');
+    protected $fillable = array(
+        'quantity','total-price','discount','product_id','altaghize_id'
+        ,'altaqte3_id','m3_shalota');
 
     public function altaqte3()
     {

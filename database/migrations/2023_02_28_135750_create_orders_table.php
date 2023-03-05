@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateOrdersTable extends Migration {
 
@@ -10,15 +11,18 @@ class CreateOrdersTable extends Migration {
 		Schema::create('orders', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			$table->integer('product_id')->unsigned();
+
 			$table->integer('quantity');
 			$table->float('total-price');
 			$table->float('discount');
-			$table->integer('altaghize_id')->unsigned();
-			$table->integer('altaqte3_id')->unsigned();
+            $table->foreignId('product_id')->unsigned()->constrained('products')->cascadeOnDelete();
+			$table->foreignId('altaghize_id')->unsigned()->constrained('altaghize')->cascadeOnDelete();
+			$table->foreignId('altaqte3_id')->unsigned()->constrained('altaqte3')->cascadeOnDelete();
 			$table->enum('m3_shalota', array(''));
 			$table->text('notes')->nullable();
 			$table->enum('payment_on_recieve', array(''));
+
+
 		});
 	}
 
